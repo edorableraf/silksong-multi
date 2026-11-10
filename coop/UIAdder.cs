@@ -46,7 +46,7 @@ public class UIAdder : MonoBehaviour
 
             if (SilklessAPI.Initialized)
             {
-                _mainMenuText.text = SilklessAPI.Connected ? $"Disable Multiplayer [{SilklessConfig.ConnectionType}]" : $"Enable Multiplayer [{SilklessConfig.ConnectionType}]";
+                _mainMenuText.text = "Hello, world!" + (SilklessAPI.Connected ? $"Disable Multiplayer [{SilklessConfig.ConnectionType}]" : $"Enable Multiplayer [{SilklessConfig.ConnectionType}]");
             }
         }
         catch (Exception e)

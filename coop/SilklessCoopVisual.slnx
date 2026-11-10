@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../SilklessLib/SilklessLib.csproj" />
+  <Project Path="SilklessCoopVisual.csproj" />
+</Solution>
