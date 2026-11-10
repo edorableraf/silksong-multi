@@ -39,7 +39,7 @@
             <HintPath>$(SILKSONG_PATH)/Hollow Knight Silksong_Data/Managed/UnityEngine.UI.dll</HintPath>
         </Reference>
 
-        <ProjectReference Include="../SilklessLib/SilklessLib.csproj" />
+        <ProjectReference Include="../lib/SilklessLib.csproj" />
     </ItemGroup>
 	
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
