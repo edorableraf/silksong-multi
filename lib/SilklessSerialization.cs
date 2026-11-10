@@ -40,6 +40,12 @@ internal static class SilklessSerialization
                 return;
             }
 
+            if (t == typeof(DateTime))
+            {
+                bw.Write(((DateTime)o).Ticks);
+                return;
+            }
+
             if (t.IsArray)
             {
                 bw.Write(BitConverter.GetBytes(((Array)o).Length));
@@ -63,6 +69,7 @@ internal static class SilklessSerialization
             if (t == typeof(int)) return br.ReadInt32();
             if (t == typeof(float)) return br.ReadSingle();
             if (t == typeof(bool)) return br.ReadByte() != 0;
+            if (t == typeof(long)) return new DateTime(br.ReadInt64());
             if (t == typeof(string))
             {
                 int length = br.ReadInt32();

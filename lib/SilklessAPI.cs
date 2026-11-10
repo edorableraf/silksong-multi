@@ -273,6 +273,7 @@ public static class SilklessAPI
                 LogUtil.LogError("Could not deserialize packet!");
                 return;
             }
+
             try
             {
                 LogUtil.LogDebug($"Received packet in {DateTime.Now - packet.timestamp}");
