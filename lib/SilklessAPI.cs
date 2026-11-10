@@ -273,8 +273,14 @@ public static class SilklessAPI
                 LogUtil.LogError("Could not deserialize packet!");
                 return;
             }
-
-            LogUtil.LogDebug($"Received packet in {DateTime.Now - packet.timestamp}");
+            try
+            {
+                LogUtil.LogDebug($"Received packet in {DateTime.Now - packet.timestamp}");
+            }
+            catch (Exception e)
+            {
+                LogUtil.LogError($"Error calculating packet latency: {e}");
+            }
 
             string key = packet.GetType().Name;
 
