@@ -195,7 +195,10 @@ public static class SilklessAPI
             LogUtil.LogDebug($"Sending packet with key={packet.GetType().Name} and id={_connector.GetId()}...");
 
             packet.ID = _connector.GetId();
-            packet.timestamp = DateTime.Now;
+            if (packet.timestamp == null)
+            {
+                packet.timestamp = DateTime.Now;
+            }
 
             byte[] bytes = Serialize(packet);
 

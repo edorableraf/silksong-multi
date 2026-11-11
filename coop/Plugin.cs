@@ -3,6 +3,7 @@ using HarmonyLib;
 using SilklessCoopVisual.Components;
 using SilklessCoopVisual.Syncs;
 using SilklessLib;
+using SilklessLib.Syncs;
 using UnityEngine;
 
 namespace SilklessCoopVisual;
@@ -66,6 +67,7 @@ public class Plugin : BaseUnityPlugin
         gameObject.AddComponent<HornetVisualSync>();
         gameObject.AddComponent<CompassSync>();
         gameObject.AddComponent<PlayerCountSync>();
+        gameObject.AddComponent<PingSync>();
         if (ModConfig.SyncSound) gameObject.AddComponent<AudioSync>();
     }
 
