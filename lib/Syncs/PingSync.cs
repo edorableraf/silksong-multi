@@ -60,9 +60,8 @@ public class PingSync : Sync
         _pingId++;
     }
 
-    private IEnumerator<WaitForSeconds> OnFowardPingPacketWaiter(ForwardPingPacket packet)
+    private void OnForwardPingPacket(ForwardPingPacket packet)
     {
-        yield return new WaitForSeconds(0.1f);
         if (packet.TargetId == SilklessAPI.GetId())
         {
             BackwardPingPacket response = new()
@@ -72,11 +71,6 @@ public class PingSync : Sync
             };
             SilklessAPI.SendPacket(response);
         }
-    }
-
-    private void OnForwardPingPacket(ForwardPingPacket packet)
-    {
-        StartCoroutine(OnFowardPingPacketWaiter(packet));
     }
     
     private void OnBackwardPingPacket(BackwardPingPacket packet)
