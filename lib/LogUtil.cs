@@ -18,6 +18,8 @@ public static class LogUtil
     [UsedImplicitly] public static Action<string> OnPopupInfo;
     [UsedImplicitly] public static Action<string> OnError;
     [UsedImplicitly] public static Action<string> OnPopupError;
+    [UsedImplicitly] public static Action<string> OnWarning;
+    [UsedImplicitly] public static Action<string> OnPopupWarning;
 
     public static void LogDebug(string message, bool popup = false)
     {
@@ -64,4 +66,18 @@ public static class LogUtil
     }
 
     public static void LogError(Exception e, bool popup = true) => LogError(e.ToString(), popup);
+
+    public static void LogWarning(string message, bool popup = false)
+    {
+        string caller = new StackTrace().GetFrame(1)?.GetMethod()?.DeclaringType?.Name ?? "unknown";
+        string method = new StackTrace().GetFrame(1)?.GetMethod()?.Name ?? "unknown";
+        string s = $"[WARNING] {caller}/{method}:  {message}";
+
+        ConsoleLogger?.LogWarning(s);
+
+        OnLog?.Invoke(s);
+        OnWarning?.Invoke(s);
+        if (popup) OnPopup?.Invoke(s);
+        if (popup) OnPopupWarning?.Invoke(s);
+    }
 }

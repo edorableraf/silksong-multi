@@ -7,11 +7,6 @@ public class ForwardPingPacket : SilklessPacket
 {
     public string TargetId;
     public int PingId;
-
-    public ForwardPingPacket()
-    {
-        timestamp = DateTime.Now;
-    }
 }
 
 public class BackwardPingPacket : SilklessPacket
@@ -54,14 +49,13 @@ public class PingSync : Sync
 
     private void SendForwardPing(string targetId)
     {
-        _pingId++;
-        ForwardPingPacket packet = new()
+        _pingTimes[_pingId] = DateTime.Now.Ticks;
+        SilklessAPI.SendPacket(new ForwardPingPacket()
         {
             TargetId = targetId,
             PingId = _pingId
-        };
-        _pingTimes[_pingId] = packet.timestamp.Ticks;
-        SilklessAPI.SendPacket(packet);
+        });
+        _pingId++;
     }
 
     private void OnForwardPingPacket(ForwardPingPacket packet)
@@ -83,6 +77,9 @@ public class PingSync : Sync
         {
             float latency = (float)(DateTime.Now.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
             LogUtil.LogDebug($"Player {packet.TargetId} has round-trip latency {latency} ms.");
+        } else
+        {
+            LogUtil.LogWarning($"Received backward ping packet with unknown PingId {packet.PingId} from player {packet.TargetId}.");
         }
     }
 
