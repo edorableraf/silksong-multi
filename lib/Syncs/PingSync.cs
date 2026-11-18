@@ -34,10 +34,12 @@ public class PingSync : Sync
     }
     protected override void OnPlayerJoin(string id)
     {
+        if (id == SilklessAPI.GetId()) return;
         _players.Add(id);
     }
     protected override void OnPlayerLeave(string id)
     {
+        if (id == SilklessAPI.GetId()) return;
         _players.Remove(id);
     }
 
