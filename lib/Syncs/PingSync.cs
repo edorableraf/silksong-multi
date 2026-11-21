@@ -80,17 +80,17 @@ public class PingSync : Sync
         }
     }
 
-    private void OnBackwardPingPacket(BackwardPingPacket packet)
+    private void OnBackwardPingPacket(BackwardPingPacket backwards_packet)
     {
-        if (_pingTimes.TryGetValue(packet.PingId, out long timestamp))
+        if (_pingTimes.TryGetValue(backwards_packet.PingId, out long timestamp))
         {
-            _pingTimes.Remove(packet.PingId);
+            _pingTimes.Remove(backwards_packet.PingId);
             double latency = (float)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
-            LogUtil.LogDebug($"Player {packet.TargetId} has round-trip latency {latency:F2} ms.");
+            LogUtil.LogDebug($"Player {backwards_packet.TargetId} has round-trip latency {latency:F2} ms.");
         }
         else
         {
-            LogUtil.LogWarning($"Received backward ping packet with unknown PingId {packet.PingId} from player {packet.TargetId}.");
+            LogUtil.LogWarning($"Received backward ping packet with unknown PingId {backwards_packet.PingId} from player {backwards_packet.TargetId}.");
         }
     }
 
