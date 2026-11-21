@@ -20,7 +20,7 @@ public class BackwardPingPacket : SilklessPacket
 public class PingSync : Sync
 {
     private int _pingId;
-    private readonly Dictionary<int, float> _pingTimes = [];
+    private readonly Dictionary<int, long> _pingTimes = [];
     private readonly HashSet<string> _players = [];
     protected override void OnEnable()
     {
@@ -54,7 +54,7 @@ public class PingSync : Sync
     private void SendForwardPing(string targetId)
     {
         LogUtil.LogDebug($"Sending forward ping to player {targetId} with PingId {_pingId}.");
-        _pingTimes[_pingId] = DateTime.Now.Ticks;
+        _pingTimes[_pingId] = DateTime.UtcNow.Ticks;
         SilklessAPI.SendPacket(new ForwardPingPacket()
         {
             TargetId = targetId,
@@ -82,10 +82,11 @@ public class PingSync : Sync
 
     private void OnBackwardPingPacket(BackwardPingPacket packet)
     {
-        if (_pingTimes.TryGetValue(packet.PingId, out float timestamp))
+        if (_pingTimes.TryGetValue(packet.PingId, out long timestamp))
         {
-            float latency = (float)(DateTime.Now.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
-            LogUtil.LogDebug($"Player {packet.TargetId} has round-trip latency {latency} ms.");
+            _pingTimes.Remove(packet.PingId);
+            double latency = (float)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
+            LogUtil.LogDebug($"Player {packet.TargetId} has round-trip latency {latency:F2} ms.");
         }
         else
         {
