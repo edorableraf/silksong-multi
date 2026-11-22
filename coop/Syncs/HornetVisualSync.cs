@@ -129,7 +129,6 @@ public class HornetVisualSync : Sync
     }
     private void OnHornetPositionPacket(HornetPositionPacket packet)
     {
-        if (packet.ID == SilklessAPI.GetId()) return;
         try
         {
             if (!cachedHornetObject || !cachedHornetAnimator) return;
@@ -182,7 +181,6 @@ public class HornetVisualSync : Sync
     // animation
     private void OnHornetAnimationPacket(HornetAnimationPacket packet)
     {
-        if (packet.ID == SilklessAPI.GetId()) return;
         try
         {
             if (!cachedHornetObject) return;

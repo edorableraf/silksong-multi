@@ -34,12 +34,10 @@ public class PingSync : Sync
     }
     protected override void OnPlayerJoin(string id)
     {
-        if (id == SilklessAPI.GetId()) return;
         _players.Add(id);
     }
     protected override void OnPlayerLeave(string id)
     {
-        if (id == SilklessAPI.GetId()) return;
         _players.Remove(id);
     }
 
@@ -85,7 +83,7 @@ public class PingSync : Sync
         if (_pingTimes.TryGetValue(backwards_packet.PingId, out long timestamp))
         {
             _pingTimes.Remove(backwards_packet.PingId);
-            double latency = (float)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
+            double latency = (double)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
             LogUtil.LogDebug($"Player {backwards_packet.TargetId} has round-trip latency {latency:F2} ms.");
         }
         else
