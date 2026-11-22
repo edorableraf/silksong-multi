@@ -83,8 +83,8 @@ public class PingSync : Sync
         if (_pingTimes.TryGetValue(backwards_packet.PingId, out long timestamp))
         {
             _pingTimes.Remove(backwards_packet.PingId);
-            double latency = (double)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
-            LogUtil.LogDebug($"Player {backwards_packet.TargetId} has round-trip latency {latency:F2} ms.");
+            double latency = (float)(DateTime.UtcNow.Ticks - timestamp) / TimeSpan.TicksPerMillisecond;
+            LogUtil.LogDebug($"Player {backwards_packet.ID} has round-trip latency {latency:F2} ms.");
         }
         else
         {
